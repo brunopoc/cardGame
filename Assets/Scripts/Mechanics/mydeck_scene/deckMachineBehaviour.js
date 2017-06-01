@@ -2,7 +2,7 @@
 
 // -------------------------------------------------------- Código do 24/05/2017 ------------------------------------------
 // -------------------------------------------------------- Salvar as posições para ocorrer as instâncias em seus devidos lugares
-static var allPosition : Vector3[]; // Váriavel que guarda a posição de todas as cartas
+static var allPosition = new Array(); // Váriavel que guarda a posição de todas as cartas
 
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
@@ -27,7 +27,7 @@ var onDeckBehaviour : boolean;
 var collDeckBehaviour : GameObject;
 
 function Start () {
-
+		allPosition.length = 20;
 
 
 }
