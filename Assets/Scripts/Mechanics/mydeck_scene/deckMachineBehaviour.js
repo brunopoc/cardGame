@@ -28,6 +28,7 @@ var collDeckBehaviour : GameObject;
 
 function Start () {
 		allPosition.length = 20;
+		onDeckBehaviour = false;
 
 
 }
@@ -98,7 +99,7 @@ function addToDeck (cardName : String) {
 }
 
 function OnTriggerEnter2D(coll: Collider2D){   
-    if(coll.gameObject.tag == "card"){
+    if(coll.gameObject.tag == "card" && coll.gameObject.GetComponent.<baseCardBehaviour>().onDeckManager == false){
    		onDeckBehaviour = true;
    		collDeckBehaviour = coll.gameObject;
     }

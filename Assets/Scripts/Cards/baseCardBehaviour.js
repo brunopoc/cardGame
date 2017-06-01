@@ -19,8 +19,6 @@ private var renderthis: Renderer; // --------------- RENDER PRA ALTERAR A ORDER 
 
 static var controlStartPosition:boolean; // -------- CONTROLE DAS VEZES QUE SALVA A POSIÇÃO INICIAL
 
-
-
 function Start () {
 	startScale = new Vector3(0.08f, 0.07f, 0.615f);
 	startPosition = this.gameObject.transform.position;

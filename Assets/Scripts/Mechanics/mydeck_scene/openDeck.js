@@ -116,8 +116,8 @@ function loadDeck(){ // --------------------------------------- função respons
 								excludCard.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
 								cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
 								deckMachineBehaviour.currentDeck = cardInstantiate; // ---------------------------------------------- Manda para o script de controle
-								Debug.Log(newCard.transform.position);
 								deckMachineBehaviour.allPosition[i] = newCard.transform.position;
+								Debug.Log(deckMachineBehaviour.allPosition[i]);
 							    i++; // --------------------------------------------------------------------------------------------- Roda o contaddor para o array
 					}
 					dontload = false;
