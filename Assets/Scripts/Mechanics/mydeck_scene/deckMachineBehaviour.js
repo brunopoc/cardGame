@@ -3,7 +3,7 @@
 // -------------------------------------------------------- Código do 24/05/2017 ------------------------------------------
 // -------------------------------------------------------- Salvar as posições para ocorrer as instâncias em seus devidos lugares
 static var allPosition = new Array(); // Váriavel que guarda a posição de todas as cartas
-
+static var currentDeck = new Array();
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
  var contObj : GameObject;
@@ -19,7 +19,7 @@ var newCard: GameObject;
 var cardCont : GameObject;
 var i : int;
 
-static var currentDeck : String[];
+
 static var currentDeckPosition : Vector3[];
 var dontHave : boolean;
 
@@ -28,6 +28,7 @@ var collDeckBehaviour : GameObject;
 
 function Start () {
 		allPosition.length = 20;
+		currentDeck.length = 20;
 		onDeckBehaviour = false;
 
 
@@ -42,11 +43,10 @@ function Update () {
 
 function addToDeck (cardName : String) {
 		var cardNameClone : String = cardName + "(Clone)";
-		for(var i: int; i < currentDeck.Length; i++){ // ----------------- Um laço para percorrer o array com nomes de cartas em jogo
+		for(var i: int; i < currentDeck.length; i++){ // ----------------- Um laço para percorrer o array com nomes de cartas em jogo
 			if(cardNameClone == currentDeck[i]){ // --------------------------- Trecho que realiza a ação caso exista alguma carta com o mesmo nome
 			contObj = GameObject.Find("cardBehaviour(Clone)");
 			contObj = contObj.transform.Find(cardNameClone).gameObject;
-			Debug.Log(contObj);
 			contObj = contObj.transform.Find("qtdCard").gameObject;
 			contObj = contObj.transform.Find("txtQtdCard").gameObject;
 			contAmount = int.Parse(contObj.GetComponent.<UnityEngine.UI.Text>().text);

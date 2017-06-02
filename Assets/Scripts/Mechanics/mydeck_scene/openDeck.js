@@ -86,6 +86,7 @@ function loadDeck(){ // --------------------------------------- função respons
 					NESSA REGIÃO EU TIVE PROBLEMAS COM A INSTANCIA DA UI, A SOLUÇÃO FOI MANDAR A CARTA TODA PARA DENTRO DO CANVAS, ASSIM CONSIGO INSTANCIAR A UI E MANTER ELA
 					COMO FILHA DE UM GAMEOBJECT SEM SE PERDER NA CENA.
 					########################################################################################################################################*/
+								
 								cardName = "Prefabs/" + "Deck" + "/Card/" + cardName; // ----------------------------------------- Monta o caminho onde estão os prefabs da carta
 								newCard = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
 								newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ---------------------------- Instancia a carta
@@ -115,9 +116,9 @@ function loadDeck(){ // --------------------------------------- função respons
 								excludCard.transform.position.y += 0.35f; // -------------------------------------------------------- Ajuste da posição
 								excludCard.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
 								cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
-								deckMachineBehaviour.currentDeck = cardInstantiate; // ---------------------------------------------- Manda para o script de controle
 								deckMachineBehaviour.allPosition[i] = newCard.transform.position;
-								Debug.Log(deckMachineBehaviour.allPosition[i]);
+								deckMachineBehaviour.currentDeck[i] = cardInstantiate[i];
+								Debug.Log (deckMachineBehaviour.currentDeck);
 							    i++; // --------------------------------------------------------------------------------------------- Roda o contaddor para o array
 					}
 					dontload = false;
