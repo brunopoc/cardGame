@@ -25,6 +25,7 @@ function delete_0ne () {
 								deckMachineBehaviour.currentDeck[i] = null;
 								deckMachineBehaviour.allPosition[i] = null;
 								baseCardBehaviour.sceneCheck = "my_decks";
+								card2.GetComponent.<baseCardBehaviour>().onDeckManager = false;
 								Destroy(this.transform.parent.gameObject);
 							}
 						}
