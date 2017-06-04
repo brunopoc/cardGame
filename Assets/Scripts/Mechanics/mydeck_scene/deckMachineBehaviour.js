@@ -1,9 +1,7 @@
 ﻿#pragma strict
-
-// -------------------------------------------------------- Código do 24/05/2017 ------------------------------------------
 // -------------------------------------------------------- Salvar as posições para ocorrer as instâncias em seus devidos lugares
-static var allPosition = new Array(); // Váriavel que guarda a posição de todas as cartas
-static var currentDeck = new Array();
+static var allPosition = new Array(); // Matriz que guarda a posição de todas as cartas
+static var currentDeck = new Array(); // Matriz que guarda todas as cartas no deck atual
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
  var contObj : GameObject;
@@ -30,15 +28,13 @@ function Start () {
 		allPosition.length = 20;
 		currentDeck.length = 20;
 		onDeckBehaviour = false;
-
-
 }
 
 
 function Update () {
-								if(Input.GetMouseButtonUp(0) && onDeckBehaviour == true) {
-								addToDeck(collDeckBehaviour.name);
-								}
+			if(Input.GetMouseButtonUp(0) && onDeckBehaviour == true) {
+			addToDeck(collDeckBehaviour.name);
+			}
 }
 
 function addToDeck (cardName : String) {
@@ -65,6 +61,21 @@ function addToDeck (cardName : String) {
 		if(dontHave == false) { // ---------------------------------------- Será necessário uma nova instância do card
 				cardName = "Prefabs/" + "Deck" + "/Card/" + cardName; // ----------------------------------------- Monta o caminho onde estão os prefabs da carta
 				var newCard : GameObject = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
+				for(var h : int; h < allPosition.length; h++) {
+						if(allPosition[h] == null){
+								h -= 1;
+								if(allPosition[h] == null){
+									h +=1;
+									allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
+								} else {
+									cardPosition = allPosition[h];
+									cardPosition.x += 0.6f;
+									allPosition[h] = cardPosition;
+								}
+							cardPosition = allPosition[h];
+							h = allPosition.length;
+						}
+				}
 				newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ---------------------------- Instancia a carta
 				cardCont = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // ------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
 				cardCont.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false); // --- Tira o img do canvas
