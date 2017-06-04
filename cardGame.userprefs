@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mechanics\mydeck_scene\deckMachineBehaviour.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mechanics\mydeck_scene\deleteOneCard.js">
     <Files>
-      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\openDeck.js" Line="92" Column="17" />
-      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\deckMachineBehaviour.js" Line="102" Column="114" />
-      <File FileName="Assets\Scripts\Cards\baseCardBehaviour.js" Line="20" Column="100" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\openDeck.js" Line="120" Column="66" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\deckMachineBehaviour.js" Line="83" Column="8" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\deleteOneCard.js" Line="24" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
