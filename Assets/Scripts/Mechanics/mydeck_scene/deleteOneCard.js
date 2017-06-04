@@ -23,6 +23,8 @@ function delete_0ne () {
 					for(var i: int; i < deckMachineBehaviour.currentDeck.length; i++){
 						if(card2.name == deckMachineBehaviour.currentDeck[i]){
 								deckMachineBehaviour.currentDeck[i] = null;
+								deckMachineBehaviour.allPosition[i] = null;
+								baseCardBehaviour.sceneCheck = "my_decks";
 								Destroy(this.transform.parent.gameObject);
 							}
 						}

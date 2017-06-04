@@ -63,36 +63,41 @@ function addToDeck (cardName : String) {
 				var newCard : GameObject = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
 				for(var h : int; h < allPosition.length; h++) {
 						if(allPosition[h] == null){
-								h -= 1;
-								if(allPosition[h] == null){
-									h +=1;
-									allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
+							if(h >=1){
+									h -= 1;
+									if(allPosition[h] == null){
+										h +=1;
+										allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
+									} else {
+										cardPosition = allPosition[h];
+										cardPosition.x += 0.6f;
+										allPosition[h] = cardPosition;
+									}
 								} else {
-									cardPosition = allPosition[h];
-									cardPosition.x += 0.6f;
-									allPosition[h] = cardPosition;
+									allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
 								}
 							cardPosition = allPosition[h];
 							h = allPosition.length;
 						}
 				}
-				newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ---------------------------- Instancia a carta
-				cardCont = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // ------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
-				cardCont.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false); // --- Tira o img do canvas
+				newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ----------------------------- Instancia a carta
+				cardCont = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // -------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
+				cardCont.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false); // ---- Tira o img do canvas
 				cardCont.transform.position = cardPosition; // ---------------------------------------------------- Posicioina o obj junto com sua respectiva carta
 				cardCont.transform.position.y += -0.35f; // -------------------------------------------------------- Ajuste da posição
 				cardCont.transform.position.x += -0.22f; // -------------------------------------------------------- Ajuste da posição
-				currentDeck[i] = newCard.name; // ---------------------------------------------- Manda para o array de controle
-				cardObj = GameObject.Find("cardBehaviour(Clone)"); // --------------------------------------------- Procura o componente que abriga as cartas
-				cardObj.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform); // ------------- Adiciona esse componente no canvas
-				newCard.transform.parent = cardObj.transform; // -------------------------------------------------- Adiciona a carta no componente que abriga elas
-				cardCont.transform.SetParent(newCard.transform); // ----------------------------------------------- Define o componente de IMG e texto como filho da carta
-				cardCont.name = "qtdCard"; // --------------------------------------------------------------------- Edita o nome da carta
-				cardCont.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25); // ---------------------- Controla o tomanho da IMG e texto
-				cardCont.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1); // ---------- Controla o tamanho da IMG e texto
-				newcontObj = cardCont.transform.Find("txtQtdCard").gameObject; // --------------------------------- Procura o componente de texto
-				contAmount = 1; // -------------------------------------------------------------------------------- Adiciona o numero 1 a uma váriavel
-			    newcontObj.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString(); // ------------------ Coloca esse 1 no componente de texto
+				currentDeck[i] = newCard.name; // ------------------------------------------------------------------ Manda para o array de controle
+				allPosition[i] = newCard.transform.position; // ---------------------------------------------------- Manda para o array de controle
+				cardObj = GameObject.Find("cardBehaviour(Clone)"); // ---------------------------------------------- Procura o componente que abriga as cartas
+				cardObj.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform); // -------------- Adiciona esse componente no canvas
+				newCard.transform.parent = cardObj.transform; // --------------------------------------------------- Adiciona a carta no componente que abriga elas
+				cardCont.transform.SetParent(newCard.transform); // ------------------------------------------------ Define o componente de IMG e texto como filho da carta
+				cardCont.name = "qtdCard"; // ---------------------------------------------------------------------- Edita o nome da carta
+				cardCont.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25); // ----------------------- Controla o tomanho da IMG e texto
+				cardCont.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1); // --------- Controla o tamanho da IMG e texto
+				newcontObj = cardCont.transform.Find("txtQtdCard").gameObject; // ---------------------------------- Procura o componente de texto
+				contAmount = 1; // --------------------------------------------------------------------------------- Adiciona o numero 1 a uma váriavel
+			    newcontObj.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString(); // ------------------- Coloca esse 1 no componente de texto
 			    excludCard = Instantiate (excludCard, new Vector3(0,0,0), Quaternion.identity);
 			    excludCard.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
 			    excludCard.transform.SetParent(newCard.transform);
