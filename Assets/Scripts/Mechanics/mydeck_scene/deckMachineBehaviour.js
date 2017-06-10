@@ -7,6 +7,7 @@ static var currentDeck = new Array(); // Matriz que guarda todas as cartas no de
  var contObj : GameObject;
  var newcontObj : GameObject;
  var excludCard : GameObject; // -------------------------- Botão que exclui -1 do contador das cartas
+ var excludCardTemp : GameObject;
  var candNameBack : String;
  var contAmount : int;
  // ------------------------------------------------------- >>> Váriaveis para a função loadDeck() <<< ---------------------------------------------
@@ -15,6 +16,7 @@ static var cardPosition : Vector3;
 var cardObj: GameObject;
 var newCard: GameObject;
 var cardCont : GameObject;
+var cardContTemp : GameObject;
 var i : int;
 
 
@@ -26,11 +28,13 @@ var collDeckBehaviour : GameObject;
 function Start () {
 		allPosition.length = 20;
 		currentDeck.length = 20;
+		dontHave = false;
 }
 
 
 function Update () {
 			if(Input.GetMouseButtonUp(0) && collDeckBehaviour != null) {
+			dontHave = false;
 			addToDeck(collDeckBehaviour.name);
 			}
 }
@@ -52,14 +56,14 @@ function addToDeck (cardName : String) {
 						}
 				dontHave = true;
 				i = currentDeck.length;
-				} else { // --------------------------- Se não houver nenhum card com o msm nome ele continua valendo false
-				dontHave = false;
-			}
+				} 
 		}
 
 		if(dontHave == false) { // ---------------------------------------- Será necessário uma nova instância do card
 				cardName = "Prefabs/" + "Deck" + "/Card/" + cardName; // ----------------------------------------- Monta o caminho onde estão os prefabs da carta
+				Debug.Log("Antes do ResouceLoad: " + cardName);
 				var newCard : GameObject = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
+				Debug.Log("Depois do ResouceLoad: " + newCard);
 				if(newCard != null){
 						for(var h : int; h < allPosition.length; h++) {
 								if(allPosition[h] == null){
@@ -81,38 +85,37 @@ function addToDeck (cardName : String) {
 								}
 						}
 						newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ----------------------------- Instancia a carta
-						cardCont = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // -------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
-						cardCont.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false); // ---- Tira o img do canvas
-						cardCont.transform.position = cardPosition; // ---------------------------------------------------- Posicioina o obj junto com sua respectiva carta
-						cardCont.transform.position.y += -0.35f; // -------------------------------------------------------- Ajuste da posição
-						cardCont.transform.position.x += -0.22f; // -------------------------------------------------------- Ajuste da posição
+						cardContTemp = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // -------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
+						cardContTemp.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false); // ---- Tira o img do canvas
+						cardContTemp.transform.position = cardPosition; // ---------------------------------------------------- Posicioina o obj junto com sua respectiva carta
+						cardContTemp.transform.position.y += -0.35f; // -------------------------------------------------------- Ajuste da posição
+						cardContTemp.transform.position.x += -0.22f; // -------------------------------------------------------- Ajuste da posição
 						currentDeck[i] = newCard.name; // ------------------------------------------------------------------ Manda para o array de controle
 						allPosition[i] = newCard.transform.position; // ---------------------------------------------------- Manda para o array de controle
 						cardObj = GameObject.Find("cardBehaviour(Clone)"); // ---------------------------------------------- Procura o componente que abriga as cartas
 						cardObj.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform); // -------------- Adiciona esse componente no canvas
 						newCard.transform.parent = cardObj.transform; // --------------------------------------------------- Adiciona a carta no componente que abriga elas
-						cardCont.transform.SetParent(newCard.transform); // ------------------------------------------------ Define o componente de IMG e texto como filho da carta
-						cardCont.name = "qtdCard"; // ---------------------------------------------------------------------- Edita o nome da carta
-						cardCont.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25); // ----------------------- Controla o tomanho da IMG e texto
-						cardCont.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1); // --------- Controla o tamanho da IMG e texto
-						newcontObj = cardCont.transform.Find("txtQtdCard").gameObject; // ---------------------------------- Procura o componente de texto
+						cardContTemp.transform.SetParent(newCard.transform); // ------------------------------------------------ Define o componente de IMG e texto como filho da carta
+						cardContTemp.name = "qtdCard"; // ---------------------------------------------------------------------- Edita o nome da carta
+						cardContTemp.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25); // ----------------------- Controla o tomanho da IMG e texto
+						cardContTemp.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1); // --------- Controla o tamanho da IMG e texto
+						newcontObj = cardContTemp.transform.Find("txtQtdCard").gameObject; // ---------------------------------- Procura o componente de texto
 						contAmount = 1; // --------------------------------------------------------------------------------- Adiciona o numero 1 a uma váriavel
 					    newcontObj.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString(); // ------------------- Coloca esse 1 no componente de texto
-					    excludCard = Instantiate (excludCard, new Vector3(0,0,0), Quaternion.identity);
-					    excludCard.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
-					    excludCard.transform.SetParent(newCard.transform);
-					    excludCard.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25);
-						excludCard.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1);
-						excludCard.transform.position = cardPosition;
-						excludCard.transform.position.y += 0.35f; // -------------------------------------------------------- Ajuste da posição
-						excludCard.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
+					    excludCardTemp = Instantiate (excludCard, new Vector3(0,0,0), Quaternion.identity);
+					    excludCardTemp.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
+					    excludCardTemp.transform.SetParent(newCard.transform);
+					    excludCardTemp.GetComponent.<RectTransform>().sizeDelta = new Vector2 (25, 25);
+						excludCardTemp.GetComponent.<RectTransform>().localScale = new Vector3 (0.0625f, 0.0714f, 1);
+						excludCardTemp.transform.position = cardPosition;
+						excludCardTemp.transform.position.y += 0.35f; // -------------------------------------------------------- Ajuste da posição
+						excludCardTemp.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
 						cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
 						i++;
 				} else {
 				Debug.Log("Está nulo rapá");
 				}
 		}
-
 }
 
 function OnTriggerEnter2D(coll: Collider2D){   
