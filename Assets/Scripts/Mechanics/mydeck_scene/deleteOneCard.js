@@ -21,7 +21,6 @@ function delete_0ne () {
 				card.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString();
 			} else {
 					for(var i: int = 0; i < deckMachineBehaviour.currentDeck.length; i++){
-					Debug.Log(i);
 						if(card2.name == deckMachineBehaviour.currentDeck[i]){
 						Debug.Log("[deleteOne]Posição de delete : " + i + ", correpondendo ao Vector3 : " + deckMachineBehaviour.allPosition[i]);
 								deckMachineBehaviour.currentDeck[i] = null;

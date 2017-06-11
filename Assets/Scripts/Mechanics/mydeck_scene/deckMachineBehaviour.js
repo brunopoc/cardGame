@@ -75,7 +75,7 @@ function addToDeck (cardName : String) {
 											} else {
 												cardPosition = allPosition[h];
 												cardPosition.x += 0.6f;
-												h +=1;
+												h += 1;
 												allPosition[h] = cardPosition;
 											}
 										} else {
