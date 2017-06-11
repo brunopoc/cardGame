@@ -7,6 +7,8 @@ var deckId: int; // ---------------------------------------- Verifica qual deck 
 
 var cardLabel: GameObject; // ----------------------------- Precisa ser linkado na Unity, corresponde ao campo das cartas
 var deckLabel : GameObject; // ---------------------------- relacionado ao campo dos decks
+var backCard : GameObject; // ----------------------------- Instanciado botão de voltar
+var nextCard : GameObject; // ----------------------------- Instancia botão de ir
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
  var contObj : GameObject;
  var newcontObj : GameObject;
@@ -123,6 +125,14 @@ function loadDeck(){ // --------------------------------------- função respons
 					dontload = false;
 					deckMachineBehaviour.cardPosition = cardPosition;
 			} // ------------------------------------------------------------------------- FIM DO LAÇO FOR
+			nextCard = Instantiate(nextCard, new Vector3(0,0,0), Quaternion.identity);
+			nextCard.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform);
+			nextCard.transform.localScale = new Vector3(1,1,1);
+			nextCard.transform.position = new Vector3(1.3f, 1.4f, 1);
+			backCard = Instantiate(backCard, new Vector3(0,0,0), Quaternion.identity);
+			backCard.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform);
+			backCard.transform.localScale = new Vector3(1,1,1);
+			backCard.GetComponent.<RectTransform>().position = new Vector3(-1.3f, 1.4f, 1);
 } // ------------------------------------------------------------------------------------- FIM DA FUNÇÃO LOAD DECK
 
 
