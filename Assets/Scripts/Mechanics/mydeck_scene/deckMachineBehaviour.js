@@ -40,8 +40,9 @@ function Update () {
 }
 
 function addToDeck (cardName : String) {
+		var i: int;
 		var cardNameClone : String = cardName + "(Clone)";
-		for(var i: int; i < currentDeck.length; i++){ // ----------------- Um laço para percorrer o array com nomes de cartas em jogo
+		for(i = 0; i < currentDeck.length; i++){ // ----------------- Um laço para percorrer o array com nomes de cartas em jogo
 			if(cardNameClone == currentDeck[i]){ // --------------------------- Trecho que realiza a ação caso exista alguma carta com o mesmo nome
 				contObj = GameObject.Find("cardBehaviour(Clone)");
 				contObj = contObj.transform.Find(cardNameClone).gameObject;
@@ -61,11 +62,10 @@ function addToDeck (cardName : String) {
 
 		if(dontHave == false) { // ---------------------------------------- Será necessário uma nova instância do card
 				cardName = "Prefabs/" + "Deck" + "/Card/" + cardName; // ----------------------------------------- Monta o caminho onde estão os prefabs da carta
-				Debug.Log("Antes do ResouceLoad: " + cardName);
 				var newCard : GameObject = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
-				Debug.Log("Depois do ResouceLoad: " + newCard);
 				if(newCard != null){
-						for(var h : int; h < allPosition.length; h++) {
+						for(var h : int = 0; h < allPosition.length; h++) {
+						Debug.Log("[deckManchine]Na Posição : " + h + ", está o Vector3 : " + allPosition[h]);
 								if(allPosition[h] == null){
 									if(h >=1){
 											h -= 1;
@@ -75,12 +75,14 @@ function addToDeck (cardName : String) {
 											} else {
 												cardPosition = allPosition[h];
 												cardPosition.x += 0.6f;
+												h +=1;
 												allPosition[h] = cardPosition;
 											}
 										} else {
 											allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
 										}
 									cardPosition = allPosition[h];
+									i = h;
 									h = allPosition.length;
 								}
 						}
@@ -111,9 +113,6 @@ function addToDeck (cardName : String) {
 						excludCardTemp.transform.position.y += 0.35f; // -------------------------------------------------------- Ajuste da posição
 						excludCardTemp.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
 						cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
-						i++;
-				} else {
-				Debug.Log("Está nulo rapá");
 				}
 		}
 }

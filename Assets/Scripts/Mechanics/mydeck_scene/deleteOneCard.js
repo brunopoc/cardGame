@@ -20,12 +20,15 @@ function delete_0ne () {
 				contAmount--;
 				card.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString();
 			} else {
-					for(var i: int; i < deckMachineBehaviour.currentDeck.length; i++){
+					for(var i: int = 0; i < deckMachineBehaviour.currentDeck.length; i++){
+					Debug.Log(i);
 						if(card2.name == deckMachineBehaviour.currentDeck[i]){
+						Debug.Log("[deleteOne]Posição de delete : " + i + ", correpondendo ao Vector3 : " + deckMachineBehaviour.allPosition[i]);
 								deckMachineBehaviour.currentDeck[i] = null;
 								deckMachineBehaviour.allPosition[i] = null;
 								baseCardBehaviour.sceneCheck = "my_decks";
 								card2.GetComponent.<baseCardBehaviour>().onDeckManager = false;
+								i = deckMachineBehaviour.currentDeck.length;
 								Destroy(this.transform.parent.gameObject);
 							}
 						}
