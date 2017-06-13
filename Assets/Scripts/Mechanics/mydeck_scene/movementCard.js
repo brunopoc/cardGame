@@ -2,7 +2,7 @@
 var cardBehaviour: GameObject;
 var velocidade : float;
 function Start () {
-	velocidade = 30;
+	velocidade = 15;
 	cardBehaviour = GameObject.FindGameObjectWithTag("cardBehaviour");
 }
 
@@ -11,9 +11,9 @@ function Update () {
 }
 
 function backOnClick(){
-cardBehaviour.transform.position.x = velocidade * Time.deltaTime;
+cardBehaviour.transform.position.x += velocidade * Time.deltaTime;
 }
 
 function nextOnClick(){
-cardBehaviour.transform.position.x = -velocidade * Time.deltaTime;
+cardBehaviour.transform.position.x += -velocidade * Time.deltaTime;
 }
