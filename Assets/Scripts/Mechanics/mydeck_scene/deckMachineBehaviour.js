@@ -2,6 +2,7 @@
 // -------------------------------------------------------- Salvar as posições para ocorrer as instâncias em seus devidos lugares
 static var allPosition = new Array(); // Matriz que guarda a posição de todas as cartas
 static var currentDeck = new Array(); // Matriz que guarda todas as cartas no deck atual
+static var tempSpace : float;
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
  var contObj : GameObject;
@@ -65,26 +66,22 @@ function addToDeck (cardName : String) {
 				var newCard : GameObject = Resources.Load(cardName) as GameObject; // --------------------------------------------- Carrega a carta de acordo com o caminho
 				if(newCard != null){
 						for(var h : int = 0; h < allPosition.length; h++) {
-						Debug.Log("[deckManchine]Na Posição : " + h + ", está o Vector3 : " + allPosition[h]);
-								if(allPosition[h] == null){
-									if(h >=1){
-											h -= 1;
-											if(allPosition[h] == null){
-												h +=1;
-												allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
+								if(allPosition[h] == null) {
+									if(h >=1) { // --------------------------------- SE FOR MAIOR OU IGUAL A 1, CASO CONTRÁRIO É A PRIMEIRA
+												h -= 1; // ------------------------ VOLTA UMA POSIÇÃO
+												cardPosition = allPosition[h]; // - PEGA A POSIÇAO ANTERIOR
+												cardPosition.x += 0.6f; // -------- AVANÇA 0.6
+												h += 1; // ------------------------ AVANÇA EM POSIÇÃO
+												allPosition[h] = cardPosition; // - COLOCA O 0.6 NA PROXÍMA POSIÇÃO
 											} else {
-												cardPosition = allPosition[h];
-												cardPosition.x += 0.6f;
-												h += 1;
-												allPosition[h] = cardPosition;
+													allPosition[h] = new Vector3(-0.8f + tempSpace, 1.35f, 1);
 											}
-										} else {
-											allPosition[h] = new Vector3(-0.8f, 1.35f, 1);
-										}
+// -------------------------------------------------------------------------------- SALVA A EDIÇÃO FEITA
 									cardPosition = allPosition[h];
 									i = h;
-									h = allPosition.length;
-								}
+									h = allPosition.length; // -------------------- SAÍ DO LOOPING
+								} 
+							}
 						}
 						newCard = Instantiate(newCard, cardPosition, Quaternion.identity); // ----------------------------- Instancia a carta
 						cardContTemp = Instantiate (cardCont, new Vector3(0,0,1), Quaternion.identity); // -------------------- Instãncia uma IMG com TEXT (todos componentes do CANVAS)
@@ -113,7 +110,6 @@ function addToDeck (cardName : String) {
 						excludCardTemp.transform.position.y += 0.35f; // -------------------------------------------------------- Ajuste da posição
 						excludCardTemp.transform.position.x += 0.22f; // -------------------------------------------------------- Ajuste da posição
 						cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
-				}
 		}
 }
 

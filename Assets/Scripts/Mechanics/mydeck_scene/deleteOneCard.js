@@ -22,7 +22,6 @@ function delete_0ne () {
 			} else {
 					for(var i: int = 0; i < deckMachineBehaviour.currentDeck.length; i++){
 						if(card2.name == deckMachineBehaviour.currentDeck[i]){
-						Debug.Log("[deleteOne]Posição de delete : " + i + ", correpondendo ao Vector3 : " + deckMachineBehaviour.allPosition[i]);
 								deckMachineBehaviour.currentDeck[i] = null;
 								deckMachineBehaviour.allPosition[i] = null;
 								baseCardBehaviour.sceneCheck = "my_decks";

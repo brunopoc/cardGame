@@ -6,10 +6,9 @@ var distanciaCard : Vector3;
 var firstCheckD : Vector3;
 var tempPosition : Vector3;
 
-function Start () {
-	velocidade = 5;
+function Start ()  {
+	velocidade = 2;
 	cardBehaviour = GameObject.FindGameObjectWithTag("cardBehaviour");
-	firstCheckD = new Vector3(0,0,0);
 }
 
 function Update () {
@@ -28,11 +27,10 @@ function Update () {
 					tempPosition = deckMachineBehaviour.allPosition[i];
 					tempPosition -= distanciaCard;
 					deckMachineBehaviour.allPosition[i] = tempPosition;
-					Debug.Log(tempPosition);
-					Debug.Log(deckMachineBehaviour.allPosition[i]);
 				}
 		}
 		firstCheckD = new Vector3(0,0,0);
+		deckMachineBehaviour.tempSpace = distanciaCard.x;
 	}
 }
 
