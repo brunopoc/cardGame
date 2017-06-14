@@ -13,6 +13,7 @@ var deckNumber: int; // ---------------------------- NUMERO DO CARD
 var finalSlotRight : boolean; // ------------------- VERIFICA SE ESTÁ NO ULTIMO SLOT DA DIREITA
 var finalSlotLeft : boolean; // -------------------- VERIFICA SE ESTÁ NO ULTIMO SLOT DA ESQUERDA
 var inMouse : boolean; // -------------------------- VERIFICA SE ESSA CARTA ESTÁ NO MOUSE
+var allDeck : boolean; // -------------------------- VERIFICA SE ESTÁ NO CAMPO DE TODAS AS CARTAS DA CENA "mydeck"
 var cardSelected : boolean;
 
 private var renderthis: Renderer; // --------------- RENDER PRA ALTERAR A ORDER IN LAYER
@@ -32,21 +33,28 @@ function Update () {
 
 		this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
 			if(sceneCheck != "freeze"){
-							if(sceneCheck == "my_decks"){
-								CardWithMouse();
-								CardToBackPosition();
+				if(allDeck == true){
+						CardWithMouse();
+						CardToBackPosition();
+				}
+				else{
+						if(sceneCheck == "my_decks"){
+							CardWithMouse();
+							CardToBackPosition();
 
 
 
-							} else {
-							if(stateMachine.stateCheck != "pause"){ // ------------------------- VERIFICA O ESTADO DO JOGO
-							CardWithMouse(); // COMPORTAMENTO DA CARTA COM O MOUSE
-							CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
-							CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
-							} else {
+						} else {
 
-							} // -------------------------------------- FIM DA VERIFICAÇÃO DE PAUSE -----------------------------------------------
-				} // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
+								if(stateMachine.stateCheck != "pause"){ // ------------------------- VERIFICA O ESTADO DO JOGO
+								CardWithMouse(); // COMPORTAMENTO DA CARTA COM O MOUSE
+								CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
+								CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
+								} else {
+
+								} // -------------------------------------- FIM DA VERIFICAÇÃO DE PAUSE -----------------------------------------------
+						} // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
+					}
 			} else {
 
 			}
@@ -153,6 +161,10 @@ function OnTriggerEnter2D(coll: Collider2D){
     if(coll.gameObject.name == "slot_09"){
    		finalSlotLeft = true;
     }
+     if(coll.gameObject.tag == "allCard"){
+   		allDeck = true;
+   		Debug.Log(allDeck);
+    }
 
 
 }  // -------------------------------------- FIM DA FUNÇÃO OnTriggerEnter2D ----------------------------------------------------------------
@@ -166,6 +178,10 @@ function OnTriggerExit2D(coll: Collider2D){
     }
     if(coll.gameObject.name == "slot_09"){
    		finalSlotLeft = true;
+    }
+    if(coll.gameObject.tag == "allCard"){
+   		allDeck = false;
+   		Debug.Log(allDeck);
     }
        
 } // --------------------------------------- FIM DA FUNÇÃO OnTriggerExit2D ----------------------------------------------------------------
