@@ -80,6 +80,7 @@ function loadDeck(){ // --------------------------------------- função respons
 						contAmount = int.Parse(contObj.GetComponent.<UnityEngine.UI.Text>().text);
 						contAmount++;
 						contObj.GetComponent.<UnityEngine.UI.Text>().text = contAmount.ToString();
+						deckMachineBehaviour.amountDeck[g] = contAmount;
 						dontload = true;
 						}
 					}
@@ -120,6 +121,7 @@ function loadDeck(){ // --------------------------------------- função respons
 								cardPosition.x += 0.6f; // -------------------------------------------------------------------------- Avança a posição para a proxíma carta
 								deckMachineBehaviour.allPosition[i] = newCard.transform.position;
 								deckMachineBehaviour.currentDeck[i] = cardInstantiate[i];
+								deckMachineBehaviour.amountDeck[i] = 1;
 							    i++; // --------------------------------------------------------------------------------------------- Roda o contaddor para o array
 					}
 					dontload = false;

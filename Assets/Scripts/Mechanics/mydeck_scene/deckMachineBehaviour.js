@@ -3,6 +3,7 @@
 static var allPosition = new Array(); // Matriz que guarda a posição de todas as cartas
 static var currentDeck = new Array(); // Matriz que guarda todas as cartas no deck atual
 static var tempSpace : float;
+static var amountDeck = new Array();
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
  var contObj : GameObject;
@@ -30,6 +31,7 @@ var dontHave : boolean;
 var collDeckBehaviour : GameObject;
 
 function Start () {
+		amountDeck.length = 20;
 		allPosition.length = 20;
 		currentDeck.length = 20;
 		dontHave = false;
@@ -59,6 +61,7 @@ function addToDeck (cardName : String) {
 							} else {
 							Debug.Log("Você já atingiu o limite máxímo desssa carta!");
 						}
+				amountDeck[i] = contAmount;
 				dontHave = true;
 				i = currentDeck.length;
 				} 
@@ -70,6 +73,7 @@ function addToDeck (cardName : String) {
 				if(newCard != null){
 						for(var h : int = 0; h < allPosition.length; h++) {
 								if(allPosition[h] == null) {
+								amountDeck[h] = 1;
 									if(h >=1) { // ---------------------------------------------------------- SE FOR MAIOR OU IGUAL A 1, CASO CONTRÁRIO É A PRIMEIRA
 										h -= 1; // ---------------------------------------------------------- VOLTA UMA POSIÇÃO
 										cardPosition = allPosition[h]; // ----------------------------------- PEGA A POSIÇAO ANTERIOR

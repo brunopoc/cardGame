@@ -1,5 +1,10 @@
 ﻿#pragma strict
 var newScene:UnityEngine.SceneManagement.SceneManager; //Variável para a troca de cenas
+var deckToSave : String[];
+var cardToSave : String;
+var qtdNum : int;
+var cont : int;
+
 function Start () {
 	
 }
@@ -23,7 +28,7 @@ newScene.LoadScene("phase_1-1");
 }
 
 function menu() {
-newScene.LoadScene("menu");
+//newScene.LoadScene("menu");
 save_Deck();
 }
 
@@ -37,5 +42,23 @@ Application.Quit();
 
 
 function save_Deck(){
+
+	for(var i: int; i < deckMachineBehaviour.currentDeck.length; i++){
+		if(deckMachineBehaviour.currentDeck[i] != null){
+			qtdNum = deckMachineBehaviour.amountDeck[i];
+			if(qtdNum > 1){
+				for(var g: int; g < deckMachineBehaviour.amountDeck.length; g++){
+					cont = i + g;
+					deckToSave[cont] = deckMachineBehaviour.currentDeck[i];
+				}
+			} else {
+					deckToSave[i] = deckMachineBehaviour.currentDeck[i];
+			}
+
+		}
+		Debug.Log(deckToSave[i]);
+	}
+
+
 
 }
