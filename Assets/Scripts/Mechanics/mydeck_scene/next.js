@@ -6,31 +6,32 @@ var distanciaCard : Vector3;
 var firstCheckD : Vector3;
 var tempPosition : Vector3;
 
-function Start () {
+function Start ()  {
 	velocidade = 2;
 	cardBehaviour = GameObject.FindGameObjectWithTag("cardBehaviour");
+	deckMachineBehaviour.firstCheckD = cardBehaviour.transform.position;
 }
 
 function Update () {
 	if(checkMouse == true && Input.GetMouseButton(0)){
-		if(firstCheckD == Vector3(0,0,0)){
-			firstCheckD = cardBehaviour.transform.position;
-
-		}
-	cardBehaviour.transform.position.x += velocidade * Time.deltaTime;
+		cardBehaviour.transform.position.x += velocidade * Time.deltaTime;
 	}
+
 	if(checkMouse == true && Input.GetMouseButtonUp(0)){
-					distanciaCard = cardBehaviour.transform.position;
-					distanciaCard.x = firstCheckD.x - cardBehaviour.transform.position.x;
+					deckMachineBehaviour.distanciaCard = cardBehaviour.transform.position;
+					deckMachineBehaviour.distanciaCard.x = deckMachineBehaviour.firstCheckD.x - cardBehaviour.transform.position.x;
+			Debug.Log("Na váriavel distanciaCard : " + deckMachineBehaviour.distanciaCard);
 			for(var i: int = 0; i < deckMachineBehaviour.currentDeck.length; i++){
 				if(deckMachineBehaviour.currentDeck[i]!= null){
-					tempPosition = deckMachineBehaviour.allPosition[i];
-					tempPosition -= distanciaCard;
-					deckMachineBehaviour.allPosition[i] = tempPosition;
-				}
-		}
-		firstCheckD = new Vector3(0,0,0);
-		deckMachineBehaviour.tempSpace = distanciaCard.x;
+					deckMachineBehaviour.tempPosition = deckMachineBehaviour.allPosition[i];
+					deckMachineBehaviour.tempPosition.x -= deckMachineBehaviour.distanciaCard.x;
+					deckMachineBehaviour.allPosition[i] = deckMachineBehaviour.tempPosition;
+					}
+			}
+		deckMachineBehaviour.tempSpace += deckMachineBehaviour.distanciaCard.x;
+			Debug.Log("Na váriavel tempSpace : " + deckMachineBehaviour.tempSpace);
+		deckMachineBehaviour.firstCheckD = cardBehaviour.transform.position;
+			Debug.Log("Na váriavel firstCheckD : " + deckMachineBehaviour.firstCheckD);
 	}
 }
 

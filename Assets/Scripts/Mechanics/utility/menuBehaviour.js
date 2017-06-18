@@ -24,6 +24,7 @@ newScene.LoadScene("phase_1-1");
 
 function menu() {
 newScene.LoadScene("menu");
+save_Deck();
 }
 
 function call_myDeck(){
@@ -32,4 +33,9 @@ newScene.LoadScene("my_decks");
 
 function call_quit(){
 Application.Quit();
+}
+
+
+function save_Deck(){
+
 }
