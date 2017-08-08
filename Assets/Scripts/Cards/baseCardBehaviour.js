@@ -163,7 +163,6 @@ function OnTriggerEnter2D(coll: Collider2D){
     }
      if(coll.gameObject.tag == "allCard"){
    		allDeck = true;
-   		Debug.Log(allDeck);
     }
 
 
@@ -181,7 +180,6 @@ function OnTriggerExit2D(coll: Collider2D){
     }
     if(coll.gameObject.tag == "allCard"){
    		allDeck = false;
-   		Debug.Log(allDeck);
     }
        
 } // --------------------------------------- FIM DA FUNÇÃO OnTriggerExit2D ----------------------------------------------------------------

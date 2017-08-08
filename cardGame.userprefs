@@ -1,8 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mechanics\mydeck_scene\next.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mechanics\mydeck_scene\deckMachineBehaviour.js">
     <Files>
-      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\next.js" Line="32" Column="52" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\next.js" Line="34" Column="3" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\back.js" Line="55" Column="61" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\deckMachineBehaviour.js" Line="115" Column="40" />
+      <File FileName="Assets\Scripts\Cards\baseCardBehaviour.js" Line="182" Column="22" />
+      <File FileName="Assets\Scripts\Mechanics\mydeck_scene\openDeck.js" Line="122" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

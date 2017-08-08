@@ -2,7 +2,7 @@
 // -------------------------------------------------------- Salvar as posições para ocorrer as instâncias em seus devidos lugares
 static var allPosition = new Array(); // Matriz que guarda a posição de todas as cartas
 static var currentDeck = new Array(); // Matriz que guarda todas as cartas no deck atual
-static var tempSpace : float;
+var tempSpace : float;
 static var amountDeck = new Array();
 
  // ------------------------------------------------------- >>> Váriaveis para as instancias das cartas e relativos <<< ----------------------------------------
@@ -21,8 +21,8 @@ var cardCont : GameObject;
 var cardContTemp : GameObject;
 var i : int;
 // -------------------------------------------------------- >>> Váriaveis usadas pelos scripts back & next <<< ------------------------------------
-static var distanciaCard : Vector3;
-static var firstCheckD : Vector3;
+var distanciaCard : Vector3;
+var firstCheckD : Vector3;
 static var tempPosition : Vector3;
 
 static var currentDeckPosition : Vector3[];
@@ -35,8 +35,8 @@ function Start () {
 		allPosition.length = 20;
 		currentDeck.length = 20;
 		dontHave = false;
+		setFirstPosition(GameObject.FindGameObjectWithTag("cardBehaviour").transform.position);
 }
-
 
 function Update () {
 			if(Input.GetMouseButtonUp(0) && collDeckBehaviour != null) {
@@ -44,6 +44,39 @@ function Update () {
 			addToDeck(collDeckBehaviour.name);
 			}
 }
+			// ------------------------------------------------------ Compilado de funções de Encapsulamento
+				function getFirstPosition () {
+						return firstCheckD;
+				}
+
+				function getCurrentDeckLength () {
+						return currentDeck.length;
+				}
+
+				function setDistance(position : Vector3){
+						distanciaCard = position;
+				}
+
+				function setTempSpace(position : float){
+						tempSpace = position;
+				}
+
+				function setFirstPosition (position : Vector3) {
+						firstCheckD = position;
+				}
+
+				function setInAllPosition ( packStorage : Object[]){
+					allPosition[packStorage[0]] = packStorage[1];
+				}
+
+				function getInAllPosition ( index : int){
+					return allPosition[index];
+				}
+
+				function getInCurrentDeck ( index : int){
+					return currentDeck[index];
+				}
+			// ------------------------------------------------------ Fim do Compilado de funções de Encapsulamento
 
 function addToDeck (cardName : String) {
 		var i: int;
