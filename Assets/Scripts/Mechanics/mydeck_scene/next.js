@@ -16,8 +16,11 @@ function Start ()  {
 function Update () {
 	if(checkMouse == true && Input.GetMouseButton(0)){ // -------------------------------- Condição que dispara o evento
 	    moveCard (velocidade, cardFieldObj);
-		controlPosition(cardFieldObj);
+		
 
+	}
+	if(checkMouse == true && Input.GetMouseButtonUp(0)){ // -------------------------------- Condição que dispara o evento
+		controlPosition(cardFieldObj);
 	}
 }
 
@@ -28,9 +31,10 @@ function moveCard (velocidade : float, objectMoved : GameObject) {
 function prepareVariablesFromDeckMachine () {
 		velocidade = 2; // -------------------------------------------------------------------------- Velocidade da Transição das cartas (movimentação)
 		controlDeck.length = 20; // ----------------------------------------------------------------- Posição maxíma que pode receber do array da função "deckMachineBehaviour"
-		cardFieldObj = GameObject.FindGameObjectWithTag("cardBehaviour").; // ------------------------ O Objeto pai da cartas que irão se mover
+		cardFieldObj = GameObject.FindGameObjectWithTag("cardBehaviour"); // ------------------------ O Objeto pai da cartas que irão se mover
 		startPosition = cardFieldObj.GetComponent.<deckMachineBehaviour>().getFirstPosition(); // --- Primeira posição (salva ao instanciar)
 		temp = cardFieldObj.GetComponent.<deckMachineBehaviour>().getCurrentDeckLength();
+		tempSpace = startPosition.x - cardFieldObj.transform.position.x;
 
 }
 
@@ -40,10 +44,11 @@ function setVariablesFromDeckMachine (functionName : String, value : Object ){
 
 function controlPosition (objectControl: GameObject) { // ------------------------------ Controle da posição da carta
 								distanceCard = objectControl.transform.position;
+								tempSpace = startPosition.x - distanceCard.x;
 					for(var i: int = 0; i < temp; i++){
-						if(cardFieldObj.GetComponent.<deckMachineBehaviour>().getInCurrentDeck(i) != null){
-								tempPosition = cardFieldObj.GetComponent.<deckMachineBehaviour>().getInAllPosition(i);
-								tempPosition.x = startPosition.x - distanceCard.x;
+						if(objectControl.GetComponent.<deckMachineBehaviour>().getInCurrentDeck(i) != null){
+								tempPosition = objectControl.GetComponent.<deckMachineBehaviour>().getInAllPosition(i);
+								tempPosition.x -= tempSpace;
 								var tempStorage : Object[];
 								tempStorage = new Object[2];
 								tempStorage[0] = i;
@@ -51,8 +56,8 @@ function controlPosition (objectControl: GameObject) { // ----------------------
 								setVariablesFromDeckMachine ("setInAllPosition", tempStorage);
 							}
 					}
-				tempSpace = tempPosition.x;
 				setVariablesFromDeckMachine ("setTempSpace", tempSpace);
+				Debug.Log(tempPosition.x);
 
 
 }

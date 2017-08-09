@@ -44,39 +44,39 @@ function Update () {
 			addToDeck(collDeckBehaviour.name);
 			}
 }
-			// ------------------------------------------------------ Compilado de funções de Encapsulamento
-				function getFirstPosition () {
-						return firstCheckD;
-				}
+// ------------------------------------------------------ Compilado de funções de Encapsulamento
+	function getFirstPosition () {
+			return firstCheckD;
+	}
 
-				function getCurrentDeckLength () {
-						return currentDeck.length;
-				}
+	function getCurrentDeckLength () {
+			return currentDeck.length;
+	}
 
-				function setDistance(position : Vector3){
-						distanciaCard = position;
-				}
+	function setDistance(position : Vector3){
+			distanciaCard = position;
+	}
 
-				function setTempSpace(position : float){
-						tempSpace = position;
-				}
+	function setTempSpace(position : float){
+			tempSpace = position;
+	}
 
-				function setFirstPosition (position : Vector3) {
-						firstCheckD = position;
-				}
+	function setFirstPosition (position : Vector3) {
+			firstCheckD = position;
+	}
 
-				function setInAllPosition ( packStorage : Object[]){
-					allPosition[packStorage[0]] = packStorage[1];
-				}
+	function setInAllPosition ( packStorage : Object[]){
+			allPosition[packStorage[0]] = packStorage[1];
+	}
 
-				function getInAllPosition ( index : int){
-					return allPosition[index];
-				}
+	function getInAllPosition ( index : int){
+			return allPosition[index];
+	}
 
-				function getInCurrentDeck ( index : int){
-					return currentDeck[index];
-				}
-			// ------------------------------------------------------ Fim do Compilado de funções de Encapsulamento
+	function getInCurrentDeck ( index : int){
+			return currentDeck[index];
+	}
+// ------------------------------------------------------ Fim do Compilado de funções de Encapsulamento
 
 function addToDeck (cardName : String) {
 		var i: int;
@@ -111,12 +111,10 @@ function addToDeck (cardName : String) {
 										h -= 1; // ---------------------------------------------------------- VOLTA UMA POSIÇÃO
 										cardPosition = allPosition[h]; // ----------------------------------- PEGA A POSIÇAO ANTERIOR
 										cardPosition.x += 0.6f; // ------------------------------------------ AVANÇA 0.6
-										h += 1; // ---------------------------------------------------------- AVANÇA EM POSIÇÃO
-										allPosition[h] = cardPosition; // ----------------------------------- COLOCA O 0.6 NA PROXÍMA POSIÇÃO
+										h += 1;
 									} else { // ------------------------------------------------------------- Se for a primeira seta o posição padrão
-										allPosition[h] = new Vector3(-0.8f - tempSpace, 1.35f, 1); // ------- posição padrão
+										cardPosition = new Vector3(-0.8f - tempSpace, 1.35f, 1); // ------- posição padrão
 									}
-									cardPosition = allPosition[h]; // --------------------------------------- Joga na váriavel a ser trabalhado pelo instantiate
 									i = h; // --------------------------------------------------------------- Joga a posição no I para ser trabalhado pela nova instancia
 									h = allPosition.length; // -------------------- SAÍ DO LOOPING
 								} 
