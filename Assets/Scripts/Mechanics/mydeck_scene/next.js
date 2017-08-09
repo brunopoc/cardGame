@@ -16,12 +16,9 @@ function Start ()  {
 function Update () {
 	if(checkMouse == true && Input.GetMouseButton(0)){ // -------------------------------- Condição que dispara o evento
 	    moveCard (velocidade, cardFieldObj);
-	    controlPosition(cardFieldObj);
-		
-
 	}
 	if(checkMouse == true && Input.GetMouseButtonUp(0)){ // -------------------------------- Condição que dispara o evento
-		
+		controlPosition(cardFieldObj);
 	}
 }
 
@@ -47,24 +44,10 @@ function setVariablesFromDeckMachine (functionName : String, value : Object ){
 }
 
 function controlPosition (objectControl: GameObject) { // ------------------------------ Controle da posição da carta
-					tempSpace = startPosition.x - distanceCard.x;
-					/*for(var i: int = 0; i < temp; i++){
-						if(objectControl.GetComponent.<deckMachineBehaviour>().getInCurrentDeck(i) != null){
-								tempPosition = objectControl.GetComponent.<deckMachineBehaviour>().getInAllPosition(i);
-
-								tempPosition.x += tempSpace;
-								var tempStorage : Object[];
-								tempStorage = new Object[2];
-								tempStorage[0] = i;
-								tempStorage[1] = tempPosition;
-								setVariablesFromDeckMachine ("setInAllPosition", tempStorage);
-							}
-					}*/
-								//startPosition = objectControl.transform.position;
-								setVariablesFromDeckMachine ("setTempSpace", tempSpace);
-								Debug.Log(deckMachineBehaviour.allPosition);
-								Debug.Log(tempSpace);
-				
+		tempSpace = startPosition.x - distanceCard.x;			
+		setVariablesFromDeckMachine ("setTempSpace", tempSpace);
+		Debug.Log(deckMachineBehaviour.allPosition);
+		Debug.Log(tempSpace);	
 
 }
 
@@ -80,3 +63,17 @@ function OnTriggerExit2D(coll: Collider2D){
 		  		checkMouse = false;
 		    } 
 }
+
+					/*for(var i: int = 0; i < temp; i++){
+						if(objectControl.GetComponent.<deckMachineBehaviour>().getInCurrentDeck(i) != null){
+								tempPosition = objectControl.GetComponent.<deckMachineBehaviour>().getInAllPosition(i);
+
+								tempPosition.x += tempSpace;
+								var tempStorage : Object[];
+								tempStorage = new Object[2];
+								tempStorage[0] = i;
+								tempStorage[1] = tempPosition;
+								setVariablesFromDeckMachine ("setInAllPosition", tempStorage);
+							}
+					}*/
+					//startPosition = objectControl.transform.position;

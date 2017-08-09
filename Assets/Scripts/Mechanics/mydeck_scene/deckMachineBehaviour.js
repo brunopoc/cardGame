@@ -36,6 +36,7 @@ function Start () {
 		currentDeck.length = 20;
 		dontHave = false;
 		setFirstPosition(GameObject.FindGameObjectWithTag("cardBehaviour").transform.position);
+		baseCardBehaviour.sceneCheck = "my_decks";
 }
 
 function Update () {
