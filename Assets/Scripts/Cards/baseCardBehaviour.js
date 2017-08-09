@@ -20,44 +20,34 @@ private var renderthis: Renderer; // --------------- RENDER PRA ALTERAR A ORDER 
 
 static var controlStartPosition:boolean; // -------- CONTROLE DAS VEZES QUE SALVA A POSIÇÃO INICIAL
 
+var onMyDeck : boolean;
+
 function Start () {
 	startScale = new Vector3(0.08f, 0.07f, 0.615f);
 	startPosition = this.gameObject.transform.position;
 	velocidadeDaTransicao = 5;
-	renderthis = GetComponent(Renderer);	
+	renderthis = GetComponent(Renderer);
 } // ---------------------------------------------------------FIM DA FUNÇÃO Start ------------------------------------------------------------
 
 
 
 function Update () {
 
-		this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
-			if(sceneCheck != "freeze"){
-				if(allDeck == true){
-						CardWithMouse();
-						CardToBackPosition();
-				}
-				else{
-						if(sceneCheck == "my_decks"){
-							CardWithMouse();
-							CardToBackPosition();
+this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
+	if(sceneCheck != "freeze"){
+		if(allDeck == true){
+				CardWithMouse();
+				CardToBackPosition();
+		}
+		else{
+				if(sceneCheck == "my_decks" ){
 
+					CardWithMouse();
+					CardToBackPosition();
 
-
-						} else {
-
-								if(stateMachine.stateCheck != "pause"){ // ------------------------- VERIFICA O ESTADO DO JOGO
-								CardWithMouse(); // COMPORTAMENTO DA CARTA COM O MOUSE
-								CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
-								CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
-								} else {
-
-								} // -------------------------------------- FIM DA VERIFICAÇÃO DE PAUSE -----------------------------------------------
-						} // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
-					}
-			} else {
-
+				}  // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
 			}
+	}
 } // -------------------------------------- FIM DA FUNÇÃO UPDATE --------------------------------------------------------------------------
 
 
@@ -68,13 +58,16 @@ function CardWithMouse() {
 			 ############################ QUANDO NÃO ESTÁ MOVENDO EM Y ###################################################################
 			 */
 
-			 if(Input.GetMouseButton(0) && mouseBehaviour.moveCard != null && notMoveInY == false && mouseBehaviour.onButtonPositionL == false && mouseBehaviour.onButtonPositionR == false){
-			 	cardSelected = true;
+			 if(Input.GetMouseButton(0) && mouseBehaviour.moveCard != null && notMoveInY == false && inMouse == true && onMyDeck == false ){
+				cardSelected = true;
 			 	mouseBehaviour.moveCard.GetComponent.<Renderer>().sortingOrder = 10;
-		    	mouseBehaviour.moveCard.transform.position = mouseBehaviour.position.transform.position;
 		    	mouseBehaviour.moveCard.transform.position.z = -5;
 		    	mouseBehaviour.moveCard.transform.localScale = new Vector3(0.16f, 0.14f, 1f); // AUMENTA O TAMANHO DA CARTA
 		    	mouseBehaviour.moveCard.GetComponent.<Collider2D>().isTrigger = true; // RETIRA A COLISÃO DA CARTA
+			 
+		    }
+		    if (cardSelected == true) {
+		    	mouseBehaviour.moveCard.transform.position = mouseBehaviour.position.transform.position;
 		    }
 } // ---------------------------------------- FIM DA FUNÇÃO CardWithMouse ------------------------------------------------------------------
 
@@ -135,7 +128,8 @@ function CardToBackPosition(){
 		    ############################# QUANDO O MOUSE ESTÁ DETECTANDO A CARTA ##########################################################
 		    ############################# QUANDO NÃO ESTÁ SENDO MOVIMENTADO EM Y ##########################################################
 		    */
-		    if(Input.GetMouseButtonUp(0) && mouseBehaviour.kingField == false && inMouse == true  && mouseBehaviour.onButtonPositionL == false && mouseBehaviour.onButtonPositionR == false){
+
+		    if(Input.GetMouseButtonUp(0) && mouseBehaviour.kingField == false && inMouse == true ){
 		    renderthis.sortingOrder = 6;
 		    this.gameObject.transform.position = startPosition;
 		   	this.gameObject.transform.localScale = startScale;
@@ -149,7 +143,7 @@ function CardToBackPosition(){
 
 function OnTriggerEnter2D(coll: Collider2D){    
  	
-    if(coll.gameObject.tag == "slot" && controlStartPosition == false && cardSelected == false){
+    if(coll.gameObject.tag == "slot" && controlStartPosition == false && cardSelected == false && onMyDeck == false){
 				    startPosition = coll.gameObject.transform.position;		    	  
     } // --------- VERIFICA A COLISÃO COM O SLOT
     if(coll.gameObject.tag == "mouse"){
@@ -164,7 +158,11 @@ function OnTriggerEnter2D(coll: Collider2D){
      if(coll.gameObject.tag == "allCard"){
    		allDeck = true;
     }
+    if(coll.gameObject.name == "cardBehaviour(Clone)"){
 
+   		onMyDeck = true;
+   		 
+    }
 
 }  // -------------------------------------- FIM DA FUNÇÃO OnTriggerEnter2D ----------------------------------------------------------------
 
@@ -181,5 +179,22 @@ function OnTriggerExit2D(coll: Collider2D){
     if(coll.gameObject.tag == "allCard"){
    		allDeck = false;
     }
+
+     if(coll.gameObject.name == "cardBehaviour(Clone)"){
+   		onMyDeck = false;
+
+    }
        
 } // --------------------------------------- FIM DA FUNÇÃO OnTriggerExit2D ----------------------------------------------------------------
+
+/*if(stateMachine.stateCheck != "pause"){ // ------------------------- VERIFICA O ESTADO DO JOGO
+								CardWithMouse(); // COMPORTAMENTO DA CARTA COM O MOUSE
+								CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
+								CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
+								} else {
+
+								} // -------------------------------------- FIM DA VERIFICAÇÃO DE PAUSE -----------------------------------------------
+
+									
+
+								*/
