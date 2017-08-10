@@ -15,7 +15,16 @@ function Update () {
 
 function behaviour_inMyDeck(){
 		if(newScene.GetActiveScene() == "my_decks"){
-		baseCardBehaviour.sceneCheck = "my_decks";
+		setScene("my_decks");
+		}
+}
+
+function setScene(value : String){
+		var temp : GameObject;
+		for(var i: int; i < deckMachineBehaviour.allPosition.length; i++){
+			if(deckMachineBehaviour.allPosition[i] != null)
+			temp = deckMachineBehaviour.allPosition[i];
+			temp.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", value);
 		}
 }
 

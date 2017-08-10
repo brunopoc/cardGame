@@ -30,22 +30,33 @@ var dontHave : boolean;
 
 var collDeckBehaviour : GameObject;
 
-function Start () {
-		amountDeck.length = 20;
-		allPosition.length = 20;
-		currentDeck.length = 20;
-		dontHave = false;
-		setFirstPosition(GameObject.FindGameObjectWithTag("cardBehaviour").transform.position);
-		baseCardBehaviour.sceneCheck = "my_decks";
-}
+	function Start () {
+		prepareVariables ();
+	}
 
-function Update () {
+	function Update () {
 			if(Input.GetMouseButtonUp(0) && collDeckBehaviour != null) {
 			dontHave = false;
 			addToDeck(collDeckBehaviour.name);
 			}
-}
-// ------------------------------------------------------ Compilado de funções de Encapsulamento
+	}
+	// ------------------------------------------------------ Compilado de funções de Encapsulamento
+	function prepareVariables (){
+		amountDeck.length = 20; 
+		allPosition.length = 20;
+		currentDeck.length = 20;
+		dontHave = false;
+		setFirstPosition(GameObject.FindGameObjectWithTag("cardBehaviour").transform.position);
+
+		var temp : GameObject;
+		for(var i: int; i < allPosition.length; i++){
+			if(allPosition[i] != null)
+			temp = allPosition[i];
+			temp.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "my_decks");
+		}
+
+	}
+
 	function getFirstPosition () {
 			return firstCheckD;
 	}
@@ -77,9 +88,9 @@ function Update () {
 	function getInCurrentDeck ( index : int){
 			return currentDeck[index];
 	}
-// ------------------------------------------------------ Fim do Compilado de funções de Encapsulamento
+	// ------------------------------------------------------ Fim do Compilado de funções de Encapsulamento
 
-function addToDeck (cardName : String) {
+	function addToDeck (cardName : String) {
 		var i: int;
 		var cardNameClone : String = cardName + "(Clone)";
 		for(i = 0; i < currentDeck.length; i++){ // ----------------- Um laço para percorrer o array com nomes de cartas em jogo
@@ -152,16 +163,16 @@ function addToDeck (cardName : String) {
 							cardPosition.x += 0.6f; // ----------------------------------------------------------------------------- Avança a posição para a proxíma carta
 			}
 		}
-}
+	}
 
-function OnTriggerEnter2D(coll: Collider2D){   
-    if(coll.gameObject.tag == "card" && coll.gameObject.GetComponent.<baseCardBehaviour>().onDeckManager == false){
+	function OnTriggerEnter2D(coll: Collider2D){   
+   	 if(coll.gameObject.tag == "card" && coll.gameObject.GetComponent.<baseCardBehaviour>().onDeckManager == false){
    		collDeckBehaviour = coll.gameObject;
-    }
-}
+   	 }
+	}
 
-function OnTriggerExit2D(coll: Collider2D){
- 	if(coll.gameObject.tag == "card"){
-   		collDeckBehaviour = null;
-    }
-}
+	function OnTriggerExit2D(coll: Collider2D){
+ 		if(coll.gameObject.tag == "card"){
+   			collDeckBehaviour = null;
+    	}
+	}

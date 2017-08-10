@@ -24,7 +24,7 @@ function delete_0ne () {
 						if(card2.name == deckMachineBehaviour.currentDeck[i]){
 								deckMachineBehaviour.currentDeck[i] = null;
 								deckMachineBehaviour.allPosition[i] = null;
-								baseCardBehaviour.sceneCheck = "my_decks";
+								controlOneScene(i, "my_decks");
 								card2.GetComponent.<baseCardBehaviour>().onDeckManager = false;
 								i = deckMachineBehaviour.currentDeck.length;
 								Destroy(this.transform.parent.gameObject);
@@ -32,14 +32,25 @@ function delete_0ne () {
 						}
 					}
 }
+
+function controlOneScene(position : int, value : String){
+		var temp : GameObject;
+		if(deckMachineBehaviour.allPosition[position] != null) {
+		temp = deckMachineBehaviour.allPosition[position];
+		temp.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", value);
+		}
+}
+
+
+
 function OnTriggerEnter2D(coll: Collider2D){   
 		if(coll.gameObject.tag == "mouse"){
-		  		baseCardBehaviour.sceneCheck = "freeze";
+		coll.gameObject.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "freeze");
 		    }
 }
 
 function OnTriggerExit2D(coll: Collider2D){   
 		if(coll.gameObject.tag == "mouse"){
-		  		baseCardBehaviour.sceneCheck = "my_decks";
+		coll.gameObject.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "my_decks");
 		    } 
 }

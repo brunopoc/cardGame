@@ -1,7 +1,5 @@
 ﻿#pragma strict
-
-static var sceneCheck : String;
-
+private var sceneCheck : String;
 var onDeckManager : boolean; // ------------- VERIFICA SE ESTA NA SEÇÃO DE GERENCIAMENTO DE CARD
 private var startPosition : Vector3; // ------------ POSIÇÃO INICAL DA CARTA
 private var startScale: Vector3; // ---------------- TAMANHO INICAL DA CARTA
@@ -22,91 +20,105 @@ static var controlStartPosition:boolean; // -------- CONTROLE DAS VEZES QUE SALV
 var onMyDeck : boolean;
 
 function Start () {
-	startScale = new Vector3(0.08f, 0.07f, 0.615f);
-	startPosition = this.gameObject.transform.position;
-	velocidadeDaTransicao = 5;
-	renderthis = GetComponent(Renderer);
+	prepareVariables (new Vector3(0.08f, 0.07f, 0.615f), this.gameObject.transform.position, 5, GetComponent(Renderer));
 } // ---------------------------------------------------------FIM DA FUNÇÃO Start ------------------------------------------------------------
 
 
 
 function Update () {
-	this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
-		if(sceneCheck != "freeze"){
-			if (sceneCheck == "my_decks" ){
-						CardWithMouse();
-						CardToBackPosition();
+			freezeCard();
+			switch (useSceneCheck ('get', 'null')){
+			case 'freeze':
+				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected);
+				CardToBackPosition();
+			break;
+			case 'my_decks':
+				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected);
+				CardToBackPosition();
+			break;
+			default :
+				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected); // COMPORTAMENTO DA CARTA COM O MOUSE
+				CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
+				CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
+			break;
+						
 					}  // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
-		}
 } // ----------------------------------------------- FIM DA FUNÇÃO UPDATE --------------------------------------------------------------------------
 
+function prepareVariables (size : Vector3, position : Vector3, speed : int, render : Renderer){
+		  /* ##################################### Quando o Script é executado é necessário preparar as seguintes váriaveis ############### */
+	startScale = size;
+	startPosition = position;
+	velocidadeDaTransicao = speed;
+	renderthis = render;
+}
 
-function CardWithMouse() {
+private function freezeCard (){
+	this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
+}
+
+function useSceneCheck ( action : String, value : String) {
+
+	switch (action) {
+		case 'get' :
+
+			return sceneCheck;
+		break;
+		case 'set' :
+			 if(value != 'null' && value != null){
+			 sceneCheck = value;
+		 }
+	}
+
+}
+
+function setSelectedCard (select : boolean) {
+	cardSelected = select;
+}
+
+function CardWithMouse(movecard : GameObject, freezeY : boolean, inMouse : boolean, onMyDeck : boolean, selected : boolean) {
 		  /* ######################################### CONTROLE DE FAZER A CARTA SE MOVIMENTAR DE ACORDO COM O MOUSE ##################### 
 			 ############################ FUNCIONA QUANDO O BOTÃO DO MOUSE ESTÁ PRESSIONADO ##############################################
 			 ############################ FUNCIONA ENQUANTO O MOUSE ESTÁ EM COLISÃO COM A CARTA ##########################################
 			 ############################ QUANDO NÃO ESTÁ MOVENDO EM Y ###################################################################
 			 */
 
-			 if(Input.GetMouseButtonDown(0) && mouseBehaviour.moveCard != null && notMoveInY == false && inMouse == true && onMyDeck == false ){
-				cardSelected = true;
+			 if(Input.GetMouseButtonDown(0) && movecard != null && freezeY == false && inMouse == true && onMyDeck == false ){
+				selected = true;
+				setSelectedCard(selected);
 			 	mouseBehaviour.moveCard.GetComponent.<Renderer>().sortingOrder = 10;
 		    	mouseBehaviour.moveCard.transform.position.z = -5;
 		    	mouseBehaviour.moveCard.transform.localScale = new Vector3(0.16f, 0.14f, 1f); // AUMENTA O TAMANHO DA CARTA
 		    	mouseBehaviour.moveCard.GetComponent.<Collider2D>().isTrigger = true; // RETIRA A COLISÃO DA CARTA
 			 
 		    }
-		    if (cardSelected == true) {
+		    if (selected == true) {
 		    	mouseBehaviour.moveCard.transform.position = mouseBehaviour.position.transform.position;
 		    	if(Input.GetMouseButtonUp(0)){
-		    		cardSelected = false;
+		    		selected = false;
+		    		setSelectedCard(selected);
 		    	}
 		    }
 } // ---------------------------------------- FIM DA FUNÇÃO CardWithMouse ------------------------------------------------------------------
 
 
-function AllowCardForX(){
-	/* ######################################### PERMITIR QUE O CARD SE MOVIMENTE OU NÃO DE ACORDO COM OS LIMITES #########################
-	*/
-			if(finalSlotRight == true && deckNumber == 0){
-		    	deckBehaviour.blockMovementRight = true; // ------------ Bloqueia o deck
-		    }
-		     if(finalSlotRight == false && deckNumber == 0){
-		    	deckBehaviour.blockMovementRight = false; // ----------- Desbloqueia o deck
-		    }
-		    if(finalSlotLeft == true && deckNumber == 19){
-		   		deckBehaviour.blockMovementLeft = true; // ----------------- Bloqueia o deck
-		    }
-		     if(finalSlotLeft == false && deckNumber == 19){
-		    	deckBehaviour.blockMovementLeft = false; // ------------ Desbloqueia o deck
-		    }
-} // --------------------------------------- FIM DA FUNÇÃO AllowCardForX ------------------------------------------------------------------
-
-
 function CardInX(){
+
 		    /*######################################### MOVIMENTAÇÃO DO DECK NO EIXO X ####################################################
 		    ############### FUNCIONA QUANDO O MOUSE ESTÁ SENDO PRESSIONADO ################################################################
 		    ############### QUANDO ESTÁ NO CAMPO DO DECK (OnMouse) ########################################################################
 		    ############### QUANDO O MOUSE NÃO ESTÁ PEGANDO NENHUM OBJETO/CARTA ###########################################################
 		    ############### QUANDO O MOUSE EM X ESTÁ E MOVIMENTO ##########################################################################*/
 
-		    AllowCardForX();
+			if(Input.GetMouseButton(0) && deckBehaviour.onMouse == true && cardSelected == false) {
+				this.gameObject.transform.position.x += Input.GetAxis("Mouse X") * velocidadeDaTransicao * Time.deltaTime;
+				notMoveInY = true;
+			} // ---------------- A Idéia por trás desse código é deslizar as cartas sem ser necessário usar os botões (não funcional)
 
-			if(Input.GetMouseButton(0) && deckBehaviour.onMouse == true && cardSelected == false){
-							if(Input.GetAxis("Mouse X") > 0 && deckBehaviour.blockMovementRight == false){
-							this.gameObject.transform.position.x += Input.GetAxis("Mouse X") * velocidadeDaTransicao * Time.deltaTime;
-							notMoveInY = true;
-
-							} else if(Input.GetAxis("Mouse X") > 0 && deckBehaviour.blockMovementLeft == false){
-							this.gameObject.transform.position.x += Input.GetAxis("Mouse X") * velocidadeDaTransicao * Time.deltaTime;
-							notMoveInY = true;
-
-							}
-			}
-			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionL == true && deckBehaviour.blockMovementLeft == false){
+			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionL == true){
 				this.gameObject.transform.position.x -= velocidadeDaTransicao * 0.2 * Time.deltaTime;
 			}
-			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionR == true && deckBehaviour.blockMovementRight == false){
+			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionR == true){
 				this.gameObject.transform.position.x += velocidadeDaTransicao * 0.2 * Time.deltaTime;
 			}
 
@@ -180,6 +192,22 @@ function OnTriggerExit2D(coll: Collider2D){
 
 								} // -------------------------------------- FIM DA VERIFICAÇÃO DE PAUSE -----------------------------------------------
 
-									
+
+function AllowCardForX(){
+	 ######################################### PERMITIR QUE O CARD SE MOVIMENTE OU NÃO DE ACORDO COM OS LIMITES #########################
+
+			if(finalSlotRight == true && deckNumber == 0){
+		    	deckBehaviour.blockMovementRight = true; // ------------ Bloqueia o deck
+		    }
+		     if(finalSlotRight == false && deckNumber == 0){
+		    	deckBehaviour.blockMovementRight = false; // ----------- Desbloqueia o deck
+		    }
+		    if(finalSlotLeft == true && deckNumber == 19){
+		   		deckBehaviour.blockMovementLeft = true; // ----------------- Bloqueia o deck
+		    }
+		     if(finalSlotLeft == false && deckNumber == 19){
+		    	deckBehaviour.blockMovementLeft = false; // ------------ Desbloqueia o deck
+		    }
+} // --------------------------------------- FIM DA FUNÇÃO AllowCardForX ------------------------------------------------------------------
 
 								*/
