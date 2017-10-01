@@ -48,13 +48,6 @@ var collDeckBehaviour : GameObject;
 		dontHave = false;
 		setFirstPosition(GameObject.FindGameObjectWithTag("cardBehaviour").transform.position);
 
-		var temp : GameObject;
-		for(var i: int; i < allPosition.length; i++){
-			if(allPosition[i] != null)
-			temp = allPosition[i];
-			temp.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "my_decks");
-		}
-
 	}
 
 	function getFirstPosition () {
@@ -124,7 +117,6 @@ var collDeckBehaviour : GameObject;
 										h -= 1; // ---------------------------------------------------------- VOLTA UMA POSIÇÃO
 										cardPosition = allPosition[h]; // ----------------------------------- PEGA A POSIÇAO ANTERIOR
 										cardPosition.x += 0.6f - tempSpace; // ------------------------------------------ AVANÇA 0.6
-										Debug.Log("chegou aqui com : " + allPosition);
 										h += 1;
 									} else { // ------------------------------------------------------------- Se for a primeira seta o posição padrão
 										cardPosition = new Vector3(-0.8f - tempSpace, 1.35f, 1); // ------- posição padrão

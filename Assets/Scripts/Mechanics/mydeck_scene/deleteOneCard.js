@@ -28,6 +28,7 @@ function delete_0ne () {
 								card2.GetComponent.<baseCardBehaviour>().onDeckManager = false;
 								i = deckMachineBehaviour.currentDeck.length;
 								Destroy(this.transform.parent.gameObject);
+								mouseBehaviour.inDelete = false;
 							}
 						}
 					}
@@ -44,13 +45,13 @@ function controlOneScene(position : int, value : String){
 
 
 function OnTriggerEnter2D(coll: Collider2D){   
-		if(coll.gameObject.tag == "mouse"){
+		if(coll.gameObject.tag == "card" && coll.gameObject.GetComponent.<baseCardBehaviour>().inMouse == true){
 		coll.gameObject.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "freeze");
 		    }
 }
 
 function OnTriggerExit2D(coll: Collider2D){   
-		if(coll.gameObject.tag == "mouse"){
+		if(coll.gameObject.tag == "card" && coll.gameObject.GetComponent.<baseCardBehaviour>().inMouse == false) {
 		coll.gameObject.GetComponent.<baseCardBehaviour>().useSceneCheck ("set", "my_decks");
 		    } 
 }

@@ -45,6 +45,7 @@ function Update () {
 					}  // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
 } // ----------------------------------------------- FIM DA FUNÇÃO UPDATE --------------------------------------------------------------------------
 
+
 function prepareVariables (size : Vector3, position : Vector3, speed : int, render : Renderer){
 		  /* ##################################### Quando o Script é executado é necessário preparar as seguintes váriaveis ############### */
 	startScale = size;
@@ -53,9 +54,12 @@ function prepareVariables (size : Vector3, position : Vector3, speed : int, rend
 	renderthis = render;
 }
 
+
 private function freezeCard (){
 	this.GetComponent.<Rigidbody2D>().velocity = new Vector2(0,0); // -------------- NÃO PERMITE A CARTA FICAR EM MOVIMENTAÇÃO POR COLIDIR
 }
+
+
 
 function useSceneCheck ( action : String, value : String) {
 
@@ -72,9 +76,12 @@ function useSceneCheck ( action : String, value : String) {
 
 }
 
+
 function setSelectedCard (select : boolean) {
 	cardSelected = select;
 }
+
+
 
 function CardWithMouse(movecard : GameObject, freezeY : boolean, inMouse : boolean, onMyDeck : boolean, selected : boolean) {
 		  /* ######################################### CONTROLE DE FAZER A CARTA SE MOVIMENTAR DE ACORDO COM O MOUSE ##################### 
@@ -101,6 +108,7 @@ function CardWithMouse(movecard : GameObject, freezeY : boolean, inMouse : boole
 		    }
 } // ---------------------------------------- FIM DA FUNÇÃO CardWithMouse ------------------------------------------------------------------
 
+
 function CardToBackPosition(kingField : boolean, inMouse : boolean, render : Renderer, card : GameObject){
 		 /* ######################################### CONTROLE DE FAZER A CARTA VOLTAR A SUA POSIÇÃO ORIGINAL ##########################
 		    ############################# FUNCIONA QUANDO O BOTÃO DO MOUSE É SOLTO ######################################################## 
@@ -109,14 +117,18 @@ function CardToBackPosition(kingField : boolean, inMouse : boolean, render : Ren
 		    ############################# QUANDO NÃO ESTÁ SENDO MOVIMENTADO EM Y ##########################################################
 		    */
 
-		    if(Input.GetMouseButtonUp(0) && mouseBehaviour.kingField == false && inMouse == true ){
-		    render.sortingOrder = 6;
-		    card.transform.position = startPosition;
-		   	card.transform.localScale = startScale;
-		   	card.GetComponent.<Collider2D>().isTrigger = false;
-		   	controlStartPosition = false;
-		   	notMoveInY = false;
-		   	cardSelected = false;
+		    if(Input.GetMouseButtonUp(0) && inMouse == true){
+		    	if(mouseBehaviour.kingField == false && mouseBehaviour.inMove == false && mouseBehaviour.inDelete == false){ // Esse IF não está no padrão certo, está buscando informação numa static (razão: realizar testes / remove bugs)
+				    render.sortingOrder = 6;
+				    card.transform.position = startPosition;
+				   	card.GetComponent.<Collider2D>().isTrigger = false;
+				   	controlStartPosition = false;
+				   	notMoveInY = false;
+				   	cardSelected = false;
+				   	Debug.Log("Chegou aqui com a posiçao : " + startPosition);
+				   	Debug.Log("Chegou aqui com a kinField / inMove / inDelete : " + mouseBehaviour.kingField + mouseBehaviour.inMove + mouseBehaviour.inDelete);
+			   	}
+			   		card.transform.localScale = startScale;
 		    }
 } // ------------------------------------------------- FIM DA FUNÇÃO CardToBackPosition --------------------------------------------------
 
@@ -133,13 +145,6 @@ function CardInX(){
 				notMoveInY = true;
 			} // ---------------- A Idéia por trás desse código é deslizar as cartas sem ser necessário usar os botões (não funcional)
 
-			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionL == true){
-				this.gameObject.transform.position.x -= velocidadeDaTransicao * 0.2 * Time.deltaTime;
-			}
-			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionR == true){
-				this.gameObject.transform.position.x += velocidadeDaTransicao * 0.2 * Time.deltaTime;
-			}
-
 
 } // --------------------------------------- FIM DA FUNÇÃO CardInX -----------------------------------------------------------------------
 
@@ -151,12 +156,7 @@ function OnTriggerEnter2D(coll: Collider2D){
     if(coll.gameObject.tag == "mouse"){
     	inMouse = true;
     } // --------- VERIFICA A COLISÃO COM O MOUSE
-    if(coll.gameObject.name == "slot_11"){
-    	finalSlotRight = true;
-    } 
-    if(coll.gameObject.name == "slot_09"){
-   		finalSlotLeft = true;
-    }
+
 
     if(coll.gameObject.name == "cardBehaviour(Clone)"){
    		onMyDeck = true; 
@@ -168,12 +168,6 @@ function OnTriggerExit2D(coll: Collider2D){
 	if(coll.gameObject.tag == "mouse"){
   		inMouse = false;
     }    
-    if(coll.gameObject.name == "slot_11"){
-    	finalSlotRight = false;
-    }
-    if(coll.gameObject.name == "slot_09"){
-   		finalSlotLeft = true;
-    }
 
      if(coll.gameObject.name == "cardBehaviour(Clone)"){
    		onMyDeck = false;
@@ -207,4 +201,11 @@ function AllowCardForX(){
 		    }
 } // --------------------------------------- FIM DA FUNÇÃO AllowCardForX ------------------------------------------------------------------
 
+
+			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionL == true){
+				this.gameObject.transform.position.x -= velocidadeDaTransicao * 0.2 * Time.deltaTime;
+			}
+			if(Input.GetMouseButton(0) && mouseBehaviour.onButtonPositionR == true){
+				this.gameObject.transform.position.x += velocidadeDaTransicao * 0.2 * Time.deltaTime;
+			}
 								*/
