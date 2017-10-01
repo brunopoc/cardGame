@@ -30,16 +30,16 @@ function Update () {
 			switch (useSceneCheck ('get', 'null')){
 			case 'freeze':
 				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected);
-				CardToBackPosition();
+				CardToBackPosition(mouseBehaviour.kingField, inMouse, renderthis, this.gameObject);
 			break;
 			case 'my_decks':
 				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected);
-				CardToBackPosition();
+				CardToBackPosition(mouseBehaviour.kingField, inMouse, renderthis, this.gameObject);
 			break;
 			default :
 				CardWithMouse(mouseBehaviour.moveCard, notMoveInY, inMouse, onMyDeck, cardSelected); // COMPORTAMENTO DA CARTA COM O MOUSE
 				CardInX(); // COMPORTAMENTO DA ROLAGEM DA CARTA
-				CardToBackPosition(); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
+				CardToBackPosition(mouseBehaviour.kingField, inMouse, renderthis, this.gameObject); // COMPORTAMENTE QUE FAZ A CARTA RETORNAR
 			break;
 						
 					}  // ------------------------------ FIM DA VERIFICAÇÃO DA CENA MY DECKS -----------------------------------------------------------
@@ -61,12 +61,12 @@ function useSceneCheck ( action : String, value : String) {
 
 	switch (action) {
 		case 'get' :
-
 			return sceneCheck;
 		break;
 		case 'set' :
 			 if(value != 'null' && value != null){
 			 sceneCheck = value;
+			 return sceneCheck;
 		 }
 	}
 
@@ -101,6 +101,24 @@ function CardWithMouse(movecard : GameObject, freezeY : boolean, inMouse : boole
 		    }
 } // ---------------------------------------- FIM DA FUNÇÃO CardWithMouse ------------------------------------------------------------------
 
+function CardToBackPosition(kingField : boolean, inMouse : boolean, render : Renderer, card : GameObject){
+		 /* ######################################### CONTROLE DE FAZER A CARTA VOLTAR A SUA POSIÇÃO ORIGINAL ##########################
+		    ############################# FUNCIONA QUANDO O BOTÃO DO MOUSE É SOLTO ######################################################## 
+		    ############################# QUANDO NÃO ESTÁ NO CAMPO DO REI #################################################################
+		    ############################# QUANDO O MOUSE ESTÁ DETECTANDO A CARTA ##########################################################
+		    ############################# QUANDO NÃO ESTÁ SENDO MOVIMENTADO EM Y ##########################################################
+		    */
+
+		    if(Input.GetMouseButtonUp(0) && mouseBehaviour.kingField == false && inMouse == true ){
+		    render.sortingOrder = 6;
+		    card.transform.position = startPosition;
+		   	card.transform.localScale = startScale;
+		   	card.GetComponent.<Collider2D>().isTrigger = false;
+		   	controlStartPosition = false;
+		   	notMoveInY = false;
+		   	cardSelected = false;
+		    }
+} // ------------------------------------------------- FIM DA FUNÇÃO CardToBackPosition --------------------------------------------------
 
 function CardInX(){
 
@@ -124,27 +142,6 @@ function CardInX(){
 
 
 } // --------------------------------------- FIM DA FUNÇÃO CardInX -----------------------------------------------------------------------
-
-
-function CardToBackPosition(){
-		 /* ######################################### CONTROLE DE FAZER A CARTA VOLTAR A SUA POSIÇÃO ORIGINAL ##########################
-		    ############################# FUNCIONA QUANDO O BOTÃO DO MOUSE É SOLTO ######################################################## 
-		    ############################# QUANDO NÃO ESTÁ NO CAMPO DO REI #################################################################
-		    ############################# QUANDO O MOUSE ESTÁ DETECTANDO A CARTA ##########################################################
-		    ############################# QUANDO NÃO ESTÁ SENDO MOVIMENTADO EM Y ##########################################################
-		    */
-
-		    if(Input.GetMouseButtonUp(0) && mouseBehaviour.kingField == false && inMouse == true ){
-		    renderthis.sortingOrder = 6;
-		    this.gameObject.transform.position = startPosition;
-		   	this.gameObject.transform.localScale = startScale;
-		   	this.gameObject.GetComponent.<Collider2D>().isTrigger = false;
-		   	controlStartPosition = false;
-		   	notMoveInY = false;
-		   	cardSelected = false;
-		    }
-} // ------------------------------------------------- FIM DA FUNÇÃO CardToBackPosition --------------------------------------------------
-
 
 function OnTriggerEnter2D(coll: Collider2D){    
  	
