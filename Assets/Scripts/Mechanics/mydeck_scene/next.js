@@ -14,11 +14,13 @@ function Start ()  {
 }
 
 function Update () {
-	if(checkMouse == true && Input.GetMouseButton(0)){ // -------------------------------- Condição que dispara o evento
-	    moveCard (velocidade, cardFieldObj);
-	}
-	if(checkMouse == true && Input.GetMouseButtonUp(0)){ // -------------------------------- Condição que dispara o evento
-		controlPosition(cardFieldObj);
+	if (baseCardBehaviour.cardSelected == false){
+		if(checkMouse == true && Input.GetMouseButton(0)){ // -------------------------------- Condição que dispara o evento
+		    moveCard (velocidade, cardFieldObj);
+		}
+		if(checkMouse == true && Input.GetMouseButtonUp(0)){ // -------------------------------- Condição que dispara o evento
+			controlPosition(cardFieldObj);
+		}
 	}
 }
 

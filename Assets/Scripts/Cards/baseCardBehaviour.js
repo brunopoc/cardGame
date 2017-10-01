@@ -11,7 +11,7 @@ var deckNumber: int; // ---------------------------- NUMERO DO CARD
 var finalSlotRight : boolean; // ------------------- VERIFICA SE ESTÁ NO ULTIMO SLOT DA DIREITA
 var finalSlotLeft : boolean; // -------------------- VERIFICA SE ESTÁ NO ULTIMO SLOT DA ESQUERDA
 var inMouse : boolean; // -------------------------- VERIFICA SE ESSA CARTA ESTÁ NO MOUSE
-var cardSelected : boolean;
+static var cardSelected : boolean; // -------------- O PADRÃO DESSA VÁRIAVEL ESTÁ ERRADA AFINS DE TESTE NO BOTÃO NEXT/BACK DO MY DECK SCENE
 
 private var renderthis: Renderer; // --------------- RENDER PRA ALTERAR A ORDER IN LAYER
 
@@ -125,8 +125,6 @@ function CardToBackPosition(kingField : boolean, inMouse : boolean, render : Ren
 				   	controlStartPosition = false;
 				   	notMoveInY = false;
 				   	cardSelected = false;
-				   	Debug.Log("Chegou aqui com a posiçao : " + startPosition);
-				   	Debug.Log("Chegou aqui com a kinField / inMove / inDelete : " + mouseBehaviour.kingField + mouseBehaviour.inMove + mouseBehaviour.inDelete);
 			   	}
 			   		card.transform.localScale = startScale;
 		    }
